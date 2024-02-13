@@ -17,9 +17,11 @@ class APIStatus(Enum):
     SERVICE_UNAVAILABLE = 503, "服务暂时不可用"
     # ... 其他状态码
 
-    def __init__(self, value: int, message: str):
-        self.value = value
-        self.message = message
+    def __new__(cls, value, message):
+        obj = object.__new__(cls)
+        obj._value_ = value
+        obj.message = message
+        return obj
 
     def __repr__(self):
         return f"{self.name}({self.value}): {self.message}"
